@@ -61,11 +61,11 @@ public class ReceiveSocketThreadObject implements Runnable {
 				return;
 			}
 
-			_datas = new byte[Configuration.packetLength];
+			_datas = new byte[Configuration.packetLength + 3];
 			while (!_exitInjected) {
 				try {
 					System.out.println("Waiting for data..");
-					DatagramPacket p = new DatagramPacket(_datas, Configuration.packetLength);
+					DatagramPacket p = new DatagramPacket(_datas, Configuration.packetLength + 3);
 					_s.receive(p);
 					_datas = p.getData();
 					System.out.println("Received Packet: " + _datas.length);
@@ -113,11 +113,13 @@ public class ReceiveSocketThreadObject implements Runnable {
 			System.out.println("Length bytes:" + (_datas[0] & 0xFF) + "_" + (_datas[1] & 0xFF)+ "_" 
 												+ (_datas[2] & 0xFF) + "_" + (_datas[3] & 0xFF)+ "_" 
 												+ (_datas[4] & 0xFF) + (_datas[5] & 0xFF));
-			int dataLength =  ((_datas[1] & 0xFF) << 8 + (_datas[2] & 0xFF));
+			System.out.println("Receive Length Data1: " + ((_datas[1] & 0xFF) << 8));
+			System.out.println("Receive Length Data2: " + (_datas[2] & 0xFF));
+			int dataLength =  (((_datas[1] & 0xFF) << 8) + (_datas[2] & 0xFF));
 			System.out.println("Handling packet of length:" + dataLength);
 			byte[] updateData = new byte[dataLength];
 			if (dataLength + 3 < _datas.length) {
-				throw new IOException("FÖRBANNAT! Paketet är för kört"); // Citat Gustav Nilsson, 1933 - 2007, Civ.
+				throw new IOException("FÖRBANNAT!"); // Citat Gustav Nilsson, 1933 - 2007, Civ.
 																			// Ing. Maskinteknik och Världens bästa
 																			// lärare.
 			}

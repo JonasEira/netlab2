@@ -87,9 +87,12 @@ public class SendSocketThreadObject implements Runnable {
 				}
 			}
 			try {
-				System.out.println("Sending "  + _sendAddress.toString() + " - " + this._port);
+				System.out.println("Sending "  + _sendAddress.toString() + " - " + this._port + " Length: " + _data.length);
+				System.out.println("Send Length Data1: " + ((_data[1] & 0xFF) << 8));
+				System.out.println("Send Length Data2: " + (_data[2] & 0xFF));
 				DatagramPacket p = new DatagramPacket(_data, _data.length, _sendAddress, this._port);
 				_s.send(p);
+				System.out.println("Sent packet Data Length: " + _data.length);
 				//write(getByteArray(), 0, getByteArray().length);
 			} catch (IOException ex) {
 				printl("IOEx - Send command failed");
