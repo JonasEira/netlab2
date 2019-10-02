@@ -25,11 +25,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		System.setProperty("java.net.preferIPv6Addresses", "true");
-		
+
 		initGui();
 	}
 
-	static void initGui(){
+	static void initGui() {
 		GameInterfaceView view = new GameInterfaceView();
 		JFrame mainWindow = new JFrame("Jättecoolt spel!");
 		mainWindow.setLayout(new BorderLayout());
@@ -72,7 +72,7 @@ public class Main {
 				client.sendCommand(x, y, d);
 			}
 		});
-		
+
 		WindowListener l2 = new WindowAdapter() {
 			@SuppressWarnings("unused")
 			public void WindowClosing(WindowEvent e) {
@@ -90,24 +90,22 @@ public class Main {
 				testWindow.dispose();
 			}
 		};
-		
+
 		testWindow.addWindowListener(l);
 		testWindow.add(textruta);
 		testWindow.add(knappen);
 		testWindow.setVisible(true);
-		
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				client.sendCommand(i, j, 1);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+
+		for (int j = 0; j < 100; j++) {
+			client.sendCommand(j, j, 1);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
-		
+
 	}
-	
+
 }

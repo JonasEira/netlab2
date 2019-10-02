@@ -53,8 +53,8 @@ public class ReceiveSocketThreadObject implements Runnable {
 				_s = new DatagramSocket(_localPort);
 				_s.setSoTimeout(99999);
 				System.out.println("Server started..");
-				_s.setSendBufferSize(65535);
-				_s.setReceiveBufferSize(65535);
+				_s.setSendBufferSize(200000);
+				_s.setReceiveBufferSize(200000);
 			} catch (IOException ex) {
 				_exitInjected = true;
 				ex.printStackTrace();

@@ -19,7 +19,10 @@ public class GameInterfaceView extends JPanel implements DataWatcher {
 	Color[] colors = new Color[9];
 
 	public GameInterfaceView() {
-		array = new byte[201][201];
+		array = new byte[201][];
+		for (int i = 0; i < array.length; i++) {
+			array[i] = new byte[201];
+		}
 		Dimension d = Configuration.windowSize;
 		width = d.width;
 		height = d.height;
@@ -42,6 +45,7 @@ public class GameInterfaceView extends JPanel implements DataWatcher {
 	
 	@Override
 	public void paint(java.awt.Graphics g) {
+		System.out.println("Repaint");
 		int width = this.getWidth();
 		int height = this.getHeight();
 		g.setColor(colors[0]);
@@ -63,10 +67,10 @@ public class GameInterfaceView extends JPanel implements DataWatcher {
 			byte[] received = (byte[])p.getData();
 			for (int i = 0; i < array.length; i++) {
 				for (int j = 0; j < array[0].length; j++) {
-					array[i][j] = received[(i+1)*j];
+					received[i*array.length + j] = array[i][j];
 				}
 			}
-			this.repaint();
+			this.repaint(10);
 		}
 	}
 }

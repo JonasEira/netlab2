@@ -62,7 +62,10 @@ public class ConnPoint {
 			_remoteState = state.closed;
 			System.out.println("Adress: " + _localPoint.toString());
 			_watchers = new ArrayList<>();
-			_datas = new byte[201][201];
+			_datas = new byte[201][];
+			for (int i = 0; i < _datas.length; i++) {
+				_datas[i] = new byte[201];
+			}
 			populateData();
 		} catch (IOException ex) {
 			System.err.println("ServerSocket error: \n" + ex.toString());
@@ -71,8 +74,9 @@ public class ConnPoint {
 
 	private void populateData() {
 		for (int i = 0; i < _datas.length; i++) {
-			for (int j = 0; j < _datas.length; j++) {
-				_datas[i][j] = (byte) (Math.random()*8);
+			for (int j = 0; j < _datas[0].length; j++) {
+				_datas[i][j] = (byte) (Math.floor(8.0*Math.random()));
+				System.out.print(" " + _datas[i][j]);
 			}
 		}		
 	}
@@ -155,7 +159,7 @@ public class ConnPoint {
 	
 	public void close() {
 		if (this._mode == null) {
-			System.err.println("EH?");
+			System.err.println("Done. You are. :D");
 		} else {
 			_rsThreadObject.close();
 			_ssThreadObject.close();
